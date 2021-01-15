@@ -34,10 +34,11 @@ initial
   column=4'b1000;
  end
 
+	
 //電子鎖
 always @(set,unlock)
  begin
-	 if(set && password_try == 4'b1010)  //輸入password_in 及 安全碼1010
+  if(set && password_try == 4'b1010)  //輸入password_in 及 安全碼1010
    begin
     password = password_in;
     lock_out = 1;

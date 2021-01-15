@@ -28,4 +28,4 @@ Logical-Designed_Group7
 ![](./176314.jpg)
 >>  * 錯誤圖形  紅色:(
 ![](./176315.jpg)
-![影片](https://youtu.be/lK7N4nZZQHA)
+[影片](https://youtu.be/lK7N4nZZQHA)

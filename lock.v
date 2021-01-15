@@ -1,29 +1,28 @@
 module lock(
- input [3:0] password_in,  //輸入設定密碼
- input [3:0] password_try,  //輸入猜測密碼
- input      set,     //設定密碼
- input      unlock,    //嘗試解鎖
- output [3:0] password_out,  //目前密碼 
- output reg unlock_out,   //解鎖燈號
- output reg  lock_out,   //上鎖燈號
- output reg  beep=0,     //蜂鳴器
+input [3:0] password_in,  	//輸入設定密碼
+input [3:0] password_try,  	//輸入猜測密碼
+input       set,     		//設定密碼
+input       unlock,    		//嘗試解鎖
+output [3:0]password_out,  	//目前密碼 
+
+output reg  unlock_out,   	//解鎖燈號
+output reg  lock_out,   	//上鎖燈號
+output reg  beep=0,     	//蜂鳴器
  
- output reg [7:0] R_color, G_color, B_color,
- output reg [3:0] column,  //8*8矩陣
- input CLK
- 
+output reg [7:0] R_color, G_color, B_color,
+output reg [3:0] column,  	//8*8矩陣
+input CLK 
  );
- reg [3:0] password;     //儲存密碼
- reg [3:0] count;     //計算時間
- reg check=0;       //在try的時候判斷是否正確
+
+reg [3:0] password;		//儲存密碼
+reg [3:0] count;     		//計算時間
+reg check=0;       		//在password_try的時候判斷是否正確
  
- assign password_out = password;  //顯示燈號
-
+assign password_out = password; //顯示燈號
  
- divfreq F1(CLK, CLK_div);
+divfreq F1(CLK, CLK_div);
 
-
-
+//初始化 解鎖上鎖燈號及8*8矩陣
 initial 
  begin 
   unlock_out=0;
@@ -35,20 +34,19 @@ initial
   column=4'b1000;
  end
 
- 
- 
+//電子鎖
 always @(set,unlock)
  begin
-  if(set && password_try==4'b1010)  //安全碼1010
+	 if(set && password_try == 4'b1010)  //輸入password_in 及 安全碼1010
    begin
     password = password_in;
     lock_out = 1;
     unlock_out = 0;
     check = 0;   //上鎖狀態
-    beep =0 ;
+    beep =0;
    end
 	
-  else if(unlock)
+  else if(unlock)//輸入password_try
    begin 
     if(password_try == password)  //輸入正確
      begin
@@ -69,9 +67,9 @@ always @(set,unlock)
  end
 
  
-
+//8*8矩陣顯示正確錯誤的圖形
 always@(posedge CLK_div)
-if(check) //正確
+if(check) //正確圖形
  begin 
   count <= count + 1'b1;
   if(count>4'b1111)
@@ -134,9 +132,8 @@ if(check) //正確
    end
  end
  
- 
- 
-else if(~check) //錯誤
+	
+else if(~check) //錯誤圖形
  begin 
   count <= count + 1'b1;
   if(count>4'b1111)
@@ -199,8 +196,8 @@ else if(~check) //錯誤
    end  
  end
 
-endmodule
 
+endmodule
 
 
 module divfreq(input CLK,output reg CLK_div); //除頻器

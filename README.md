@@ -24,4 +24,3 @@ Logical-Designed_Group7
 2. 點矩陣
 >>  * 正確圖形  綠色:)
 >>  * 錯誤圖形  紅色:(
->>> * 除頻器 divfreq
